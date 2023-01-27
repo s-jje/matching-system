@@ -25,12 +25,7 @@ public class TransactionService {
 
     @Transactional(readOnly = true)
     public List<TransactionResponseDto> getTransactionRequests(Long itemId) {
-        List<Transaction> transactionList = transactionRepository.findByItemId(itemId);
-        List<TransactionResponseDto> transactionResponseDtoList = new ArrayList<>();
-        transactionList.forEach(transaction -> {
-            transactionResponseDtoList.add(new TransactionResponseDto(transaction, transaction.getUser().getNickname()));
-        });
-        return transactionResponseDtoList;
+        return transactionRepository.findByItemIdWith(itemId);
     }
 
     @Transactional

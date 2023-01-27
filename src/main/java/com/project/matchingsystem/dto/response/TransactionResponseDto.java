@@ -1,7 +1,10 @@
 package com.project.matchingsystem.dto.response;
 
 import com.project.matchingsystem.domain.Transaction;
+import com.project.matchingsystem.enums.TransactionStatusEnum;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class TransactionResponseDto {
@@ -12,6 +15,15 @@ public class TransactionResponseDto {
     private final String status;
     private final String createdAt;
     private final String modifiedAt;
+
+    public TransactionResponseDto(Long id, String nickname, String itemName, TransactionStatusEnum status, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.id = id;
+        this.nickname = nickname;
+        this.itemName = itemName;
+        this.status = status.name();
+        this.createdAt = createdAt.toString();
+        this.modifiedAt = modifiedAt.toString();
+    }
 
     public TransactionResponseDto(Transaction transaction, String nickname) {
         this.id = transaction.getId();
