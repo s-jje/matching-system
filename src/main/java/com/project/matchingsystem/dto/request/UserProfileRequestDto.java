@@ -14,7 +14,6 @@ public class UserProfileRequestDto {
     @Size(min = 2, max = 500)
     private String content;
 
-    @Value("${profile.default.image.path}")
     private String imagePath;
 
 }
