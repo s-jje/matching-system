@@ -2,16 +2,17 @@ package com.project.matchingsystem.domain;
 
 import com.project.matchingsystem.enums.SellerManagementStatusEnum;
 import com.project.matchingsystem.dto.response.SellerManagementResponseDto;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class SellerManagement extends TimeStamped {
 
     @Id

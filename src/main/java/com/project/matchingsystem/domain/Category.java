@@ -1,15 +1,16 @@
 package com.project.matchingsystem.domain;
 
 import com.project.matchingsystem.dto.response.CategoryResponseDto;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category extends TimeStamped {
 
     @Id

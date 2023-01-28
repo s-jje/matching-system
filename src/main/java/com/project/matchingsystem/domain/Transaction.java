@@ -1,14 +1,15 @@
 package com.project.matchingsystem.domain;
 
 import com.project.matchingsystem.enums.TransactionStatusEnum;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
-@NoArgsConstructor
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Transaction extends TimeStamped {
 
     @Id

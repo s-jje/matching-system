@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class ControllerExceptionHandler {
+public class ExceptionAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseStatusDto handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        return new ResponseStatusDto(HttpStatus.BAD_REQUEST.toString(), e.getAllErrors().get(0).getDefaultMessage());
+        return new ResponseStatusDto(HttpStatus.BAD_REQUEST.toString(), e.getFieldError().getDefaultMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
