@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +35,7 @@ public class ItemService {
     @Transactional
     public Page<ItemResponseDto> searchItems(String itemName, Pageable pageable) {
         List<Item> itemList = itemRepository.findAllByNameContainingOrderByModifiedAtDesc(itemName, pageable);
-        List<ItemResponseDto> itemResponseDto = new ArrayList<>();
-        itemList.forEach(item -> itemResponseDto.add(new ItemResponseDto(item, item.getUser().getNickname())));
+        List<ItemResponseDto> itemResponseDto = itemList.stream().map(ItemResponseDto::new).collect(Collectors.toList());
         return new PageImpl<>(itemResponseDto);
     }
 
@@ -43,15 +43,14 @@ public class ItemService {
     @Transactional(readOnly = true)
     public ItemResponseDto getItem(Long itemId) {
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_ITEM.getMessage()));
-        return new ItemResponseDto(item, item.getUser().getUsername());
+        return new ItemResponseDto(item);
     }
 
     // 전체 상품 조회
     @Transactional(readOnly = true)
     public Page<ItemResponseDto> getItems(Pageable pageable) {
         List<Item> itemList = itemRepository.findAllByOrderByCreatedAtDesc(pageable);
-        List<ItemResponseDto> itemResponseDto = new ArrayList<>();
-        itemList.forEach(item -> itemResponseDto.add(new ItemResponseDto(item, item.getUser().getNickname())));
+        List<ItemResponseDto> itemResponseDto = itemList.stream().map(ItemResponseDto::new).collect(Collectors.toList());
         return new PageImpl<>(itemResponseDto);
     }
 
@@ -61,8 +60,7 @@ public class ItemService {
                 () -> new IllegalArgumentException(ErrorCode.NOT_EXIST_CATEGORY.getMessage())
         );
         List<Item> itemList = itemRepository.findByCategoryOrderByCreatedAtDesc(category, pageable);
-        List<ItemResponseDto> itemResponseDto = new ArrayList<>();
-        itemList.forEach(item -> itemResponseDto.add(new ItemResponseDto(item, item.getUser().getNickname())));
+        List<ItemResponseDto> itemResponseDto = itemList.stream().map(ItemResponseDto::new).collect(Collectors.toList());
         return new PageImpl<>(itemResponseDto);
     }
 
@@ -70,19 +68,17 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Page<ItemResponseDto> getItemsBySeller(Long sellerId, Pageable pageable) {
         List<Item> itemList = itemRepository.findAllByUserIdOrderByCreatedAtDesc(sellerId, pageable);
-        List<ItemResponseDto> itemResponseDto = new ArrayList<>();
-        itemList.forEach(item -> itemResponseDto.add(new ItemResponseDto(item, item.getUser().getNickname())));
+        List<ItemResponseDto> itemResponseDto = itemList.stream().map(ItemResponseDto::new).collect(Collectors.toList());
         return new PageImpl<>(itemResponseDto);
     }
 
     // 상품 등록
     @Transactional
     public ResponseStatusDto uploadItem(ItemRequestDto itemRequestDto, User user) {
-        // 카테고리가 존재 하는지 확인
         Category category = categoryRepository.findByName(itemRequestDto.getCategoryName()).orElseThrow(
                 () -> new IllegalArgumentException(ErrorCode.NOT_EXIST_CATEGORY.getMessage())
         );
-        if(category.getParentId() == null){
+        if (category.getParentId() == null) {
             throw new IllegalArgumentException(ErrorCode.NOT_CHILD_CATEGORY.getMessage());
         }
         itemRepository.save(new Item(itemRequestDto, category, user));
@@ -91,11 +87,10 @@ public class ItemService {
 
     @Transactional
     public ResponseStatusDto updateItem(Long itemId, ItemRequestDto itemRequestDto, String username) {
-        // 카테고리가 존재 하는지 확인
         Category category = categoryRepository.findByName(itemRequestDto.getCategoryName()).orElseThrow(
                 () -> new IllegalArgumentException(ErrorCode.NOT_EXIST_CATEGORY.getMessage())
         );
-        if(category.getParentId() == null){
+        if (category.getParentId() == null) {
             throw new IllegalArgumentException(ErrorCode.NOT_CHILD_CATEGORY.getMessage());
         }
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_ITEM.getMessage()));
