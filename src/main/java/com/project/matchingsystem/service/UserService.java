@@ -151,8 +151,6 @@ public class UserService {
             if (!sellerManagement.isReject()) {
                 throw new IllegalArgumentException(ErrorCode.ALREADY_REQUEST_SELLER.getMessage() + "현재 상태: " + sellerManagement.getRequestStatus());
             }
-
-            sellerManagement = new SellerManagement(userId, SellerManagementStatusEnum.WAIT);
             sellerManagement.waitRequestStatus();
         } else {
             SellerManagement sellerManagement = new SellerManagement(userId, SellerManagementStatusEnum.WAIT);
