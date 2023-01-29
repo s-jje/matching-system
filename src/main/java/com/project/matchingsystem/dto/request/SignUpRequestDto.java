@@ -1,7 +1,6 @@
 package com.project.matchingsystem.dto.request;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

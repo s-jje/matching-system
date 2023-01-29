@@ -1,7 +1,7 @@
 package com.project.matchingsystem.domain;
 
-import com.project.matchingsystem.enums.SellerManagementStatusEnum;
 import com.project.matchingsystem.dto.response.SellerManagementResponseDto;
+import com.project.matchingsystem.enums.SellerManagementStatusEnum;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

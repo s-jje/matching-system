@@ -1,13 +1,12 @@
 package com.project.matchingsystem.domain;
 
-import com.project.matchingsystem.enums.UserRoleEnum;
 import com.project.matchingsystem.dto.request.UserProfileRequestDto;
 import com.project.matchingsystem.dto.response.UserResponseDto;
+import com.project.matchingsystem.enums.UserRoleEnum;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 

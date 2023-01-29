@@ -1,13 +1,11 @@
 package com.project.matchingsystem.controller;
 
 import com.project.matchingsystem.dto.request.SignInRequestDto;
-import com.project.matchingsystem.dto.request.SignUpAdminRequestDto;
 import com.project.matchingsystem.dto.request.SignUpRequestDto;
 import com.project.matchingsystem.dto.request.UserProfileRequestDto;
 import com.project.matchingsystem.dto.response.ResponseStatusDto;
 import com.project.matchingsystem.dto.response.TokenResponseDto;
 import com.project.matchingsystem.dto.response.UserProfileResponseDto;
-import com.project.matchingsystem.exception.ErrorCode;
 import com.project.matchingsystem.jwt.JwtProvider;
 import com.project.matchingsystem.security.UserDetailsImpl;
 import com.project.matchingsystem.service.UserProfileService;
@@ -19,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

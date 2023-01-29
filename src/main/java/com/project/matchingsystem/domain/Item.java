@@ -1,7 +1,7 @@
 package com.project.matchingsystem.domain;
 
-import com.project.matchingsystem.enums.ItemTransactionStatusEnum;
 import com.project.matchingsystem.dto.request.ItemRequestDto;
+import com.project.matchingsystem.enums.ItemTransactionStatusEnum;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
