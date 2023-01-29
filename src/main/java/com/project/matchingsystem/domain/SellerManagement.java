@@ -32,6 +32,10 @@ public class SellerManagement extends TimeStamped {
         this.requestStatus = requestStatus;
     }
 
+    public boolean isReject() {
+        return requestStatus == SellerManagementStatusEnum.REJECT;
+    }
+
     public void completeRequestStatus() {
         this.requestStatus = SellerManagementStatusEnum.COMPLETE;
     }

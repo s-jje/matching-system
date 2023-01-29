@@ -138,7 +138,7 @@ public class UserService {
     public ResponseStatusDto sellerRequest(Long userId) {
         //신청자가 관리자일때 생략하기
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_USER.getMessage()));
-        if (user.getUserRole() == UserRoleEnum.ADMIN) {
+        if (user.isAdmin()) {
             return new ResponseStatusDto(HttpStatus.BAD_REQUEST.toString(), "해당 관리자는 권한 요청이 불가능합니다.");
         }
 
@@ -148,7 +148,7 @@ public class UserService {
                     () -> new IllegalArgumentException(ErrorCode.NOT_FIND_REQUEST.getMessage())
             );
 
-            if (sellerManagement.getRequestStatus() != SellerManagementStatusEnum.REJECT) {
+            if (!sellerManagement.isReject()) {
                 throw new IllegalArgumentException(ErrorCode.ALREADY_REQUEST_SELLER.getMessage() + "현재 상태: " + sellerManagement.getRequestStatus());
             }
 

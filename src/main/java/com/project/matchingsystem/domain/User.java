@@ -60,6 +60,10 @@ public class User {
         this.imagePath = userProfileRequestDto.getImagePath();
     }
 
+    public boolean isAdmin() {
+        return userRole == UserRoleEnum.ADMIN;
+    }
+
     public void updateImage(String imagePath) {
         this.imagePath = imagePath;
     }
