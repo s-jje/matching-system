@@ -92,13 +92,13 @@ public class ItemService {
         if (category.getParentId() == null) {
             throw new IllegalArgumentException(ErrorCode.NOT_CHILD_CATEGORY.getMessage());
         }
+
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_ITEM.getMessage()));
-        if (item.getUser().getUsername().equals(username)) {
-            item.update(itemRequestDto, category);
-        } else {
+        if (!item.isOwner(username)) {
             throw new IllegalArgumentException(ErrorCode.AUTHORIZATION.getMessage());
         }
 
+        item.update(itemRequestDto, category);
         return new ResponseStatusDto(HttpStatus.OK.toString(), "상품 수정 완료");
     }
 
@@ -106,13 +106,12 @@ public class ItemService {
     @Transactional
     public ResponseStatusDto deleteItem(Long itemId, String username) {
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException(ErrorCode.NOT_FOUND_ITEM.getMessage()));
-        if (item.getUser().getUsername().equals(username)) {
-            itemRepository.delete(item);
-        } else {
+        if (!item.isOwner(username)) {
             throw new IllegalArgumentException(ErrorCode.AUTHORIZATION.getMessage());
         }
-        transactionRepository.findByItemId(itemId).forEach(Transaction::updateStatusToDelete);
 
+        itemRepository.delete(item);
+        transactionRepository.findByItemId(itemId).forEach(Transaction::updateStatusToDelete);
         return new ResponseStatusDto(HttpStatus.OK.toString(), "상품 삭제 완료");
     }
 

@@ -58,4 +58,8 @@ public class Item extends TimeStamped {
         this.category = category;
     }
 
+    public boolean isOwner(String username) {
+        return getUser().getUsername().equals(username);
+    }
+
 }
